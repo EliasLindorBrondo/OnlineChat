@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="OnlineChat.Mobile.Views.ChatRoomPage"
+             Title="               Sala de Chat Global">
+
+    <Grid RowDefinitions="*,auto">
+        <ListView ItemsSource="{Binding MessageList}" RowHeight="80">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid> 
+                            <Grid RowDefinitions="auto,auto">
+                                <Grid  IsVisible="{Binding IsOwnerMessage}" >
+                                    
+                                    <Frame CornerRadius="10"
+                                       Grid.Column="0"
+                                       HorizontalOptions="End"
+                                       HasShadow="True"
+                                       Margin="45,10,5,5"
+                                       Padding="5,0,0,2">
+                                        <Frame.Background>
+                                            <!-- StartPoint por defecto es (0,0) -->
+                                            <LinearGradientBrush EndPoint="1,0">
+                                                <GradientStop Color="#19D4DF"
+                                                         Offset="0.01" />
+                                                <GradientStop Color="DarkCyan"
+                                                         Offset="1.0" />
+                                            </LinearGradientBrush>
+                                        </Frame.Background>
+                                        <Label Margin="1"
+                                           TextColor="{StaticResource WhiteColor}"
+                                           LineBreakMode="WordWrap" 
+                                               Padding="1,0,10,0">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding UserName}"  FontSize="14.5"
+                                                          TextColor="White"
+                                                          FontAttributes="Bold"></Span>
+                                                    <Span Text="◉"
+                                                          TextColor="White"></Span>
+                                                    <Span Text="&#10;"></Span>
+                                                    <Span Text="{Binding Message}" FontSize="15" ></Span>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </Frame>
+
+                                </Grid>
+                                <!--<Label Text="{Binding UserName}"/>
+                                <Label Text="{Binding Message}" Margin="10"/>-->
+
+                                <Grid ColumnDefinitions="*, 40"
+                                  Grid.Row="1"
+                                  IsVisible="{Binding IsOwnerMessage, Converter={StaticResource Key=BooleanToVisibility}, ConverterParameter=Inverse}">
+                                    <!--<Label Text="{Binding UserName}"/>-->
+                                    <Frame CornerRadius="10"
+                                       Grid.Column="0"
+                                       HorizontalOptions="Start"
+                                       HasShadow="True"
+                                       Margin="5,10,5,5"
+                                       Padding="5,0,5,3">
+                                        <Frame.Background>
+                                            <!-- StartPoint por defecto es (0,0) -->
+                                            <LinearGradientBrush EndPoint="1,0">
+                                                <GradientStop Color="#D4348E" Offset="0.01" />
+                                                <GradientStop Color="RosyBrown" Offset="1.0" />
+                                            </LinearGradientBrush>
+                                            
+                                        </Frame.Background>
+                                        <Label Margin="1"
+                                           TextColor="{StaticResource WhiteColor}"
+                                           LineBreakMode="WordWrap" 
+                                           Padding="1,0,10,0">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="◉"
+                                                          TextColor="White"></Span>
+                                                    <Span Text="{Binding UserName}" FontSize="14.5"
+                                                          TextColor="White"
+                                                          FontAttributes="Bold"></Span>
+                                                    <Span Text="&#10;"></Span>
+                                                    <Span Text="{Binding Message}" FontSize="15" ></Span>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </Frame>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackLayout Grid.Row="1" Margin="10,0,10,10"  Orientation="Horizontal">
+            <Frame CornerRadius="70"
+                   HeightRequest="36"
+                   HorizontalOptions="FillAndExpand">
+                <Frame.Background>
+                    <!-- StartPoint por defecto es (0,0) -->
+                    <LinearGradientBrush StartPoint="1,0" EndPoint="1,0">
+                        <GradientStop Color="#D4348E" Offset="0.1" />
+                        <GradientStop Color="DarkCyan" Offset="1.0" />
+                    </LinearGradientBrush>
+                    
+                </Frame.Background>
+                <Entry Text="{Binding Message}"
+                       HeightRequest="36"
+                       TextColor="White"
+                       VerticalOptions="End"
+                       TranslationY="0"
+                       FontSize="15"
+                       MaxLength="68"
+                       Placeholder="Mensaje"
+                       PlaceholderColor="White"
+                       IsTextPredictionEnabled="True"
+                   ></Entry>
+            </Frame>
+            
+            <Button Text="Enviar"
+                    Margin="10"
+                    FontAttributes="Bold"
+                    HeightRequest="2"
+                    FontSize="13"
+                    Command="{Binding SendMsgCommand}" CornerRadius="20"/>
+        </StackLayout>
+    </Grid>
+</ContentPage>
